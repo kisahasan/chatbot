@@ -4,8 +4,8 @@ import './index.css'
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Chatbot from './components/Chatbot';
 
-// import Chatbot from "./components/Chatbot";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -185,7 +185,7 @@ function App() {
 </div>
 
       {/* Chatbot */}
-      {/* <Chatbot /> */}
+      <Chatbot />
     </div>
   );
 }
