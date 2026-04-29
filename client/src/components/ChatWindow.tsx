@@ -10,18 +10,15 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
-  // Lead flow
   const [step, setStep] = useState<"chat" | "name" | "phone" | "done">("chat");
   const [lead, setLead] = useState({ name: "", phone: "" });
 
-  // Auto scroll
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 🔥 API CALL
   const fetchReply = async (message: string) => {
     try {
       const res = await fetch("http://localhost:5000/chat", {
@@ -46,19 +43,16 @@ export default function Chatbot() {
     }
   };
 
-  // 🚀 MAIN SEND FUNCTION
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage: Message = { text: input, sender: "user" };
     setMessages((prev) => [...prev, userMessage]);
 
-    // ===== FLOW CONTROL =====
 
     if (step === "chat") {
       await fetchReply(input);
 
-      // Ask name after first interaction
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
@@ -94,7 +88,6 @@ export default function Chatbot() {
 
       setStep("done");
 
-      // 🔥 This is your MONEY data
       await fetch("http://localhost:5000/lead", {
   method: "POST",
   headers: {
